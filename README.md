@@ -25,4 +25,4 @@ View, Favorite, and comment on any of the original Pokemon.
 
 ## Design
 
-[design](IMG_5536.jpeg)
+![design](IMG_5536.jpeg)
