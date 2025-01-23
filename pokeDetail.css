@@ -1,0 +1,39 @@
+body {
+    background-color: #f8f9fa;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.card {
+    margin-bottom: 2rem;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+    height: 200px;
+    object-fit: contain;
+}
+
+.comment-textbox {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.comment-card {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.username {
+    color: #007bff;
+    font-weight: bold;
+}
+
