@@ -29,18 +29,13 @@ View, Favorite, and comment on any of the original Pokemon.
 
 
 ## HTML Deliverables
-- Simon HTML deployed to your production environment: learned how to deploy using the .sh file
-- **Prerequisite**: A link to your GitHub startup repository prominently displayed on your application's home page
-- **Prerequisite**: Notes in your startup Git repository README.md file documenting what you modified and added with this deliverable. The TAs will only grade things that have been clearly described as being completed. Review the [voter app](https://github.com/webprogramming260/startup-example) as an example.
-- **Prerequisite**: Enough Git commits to fully prove your ownership of your code. This usually means dozens of commits spread across multiple days of the deliverable development period. Failure to do this may result in the rejection of your submission.
-- Properly structured HTML
-  - 20% HTML pages for each component of your application
-  - 10% Proper use of HTML tags including BODY, NAV, MAIN, HEADER, FOOTER
-  - 10% Links between pages as necessary
-  - 10% Application textual content
-  - 10% Placeholder for 3rd party service calls
-  - 10% Application images
-  - 10% Login placeholder, including user name display
-  - 10% Database data placeholder showing content stored in the database
-  - 10% WebSocket data placeholder showing where realtime communication will go
+  - HTML Pages: Three different pages. One for each view. index.html(login), pokelist.html, pokeDetail.html
+  - Proper HTML element usage: I used all the right tags as I already am familiar with html
+  - Links: there are links between views
+  - Text: there is some example/placeholder text for things
+  - Placeholder for 3rd party service calls - The list page will be generated from a 3rd party service call as well as the poke detail page
+  - Images: Image is displayed on pokeDetail page
+  - Login placeholder, including user name display: The login placeholder is on the index.html page
+  - Database data placeholder showing content stored in the database: Comments are on the pokedetail which will be stored in the database
+  - WebSocket data placeholder showing where realtime communication will go: There is a comment section where users can post and see other comments
 
