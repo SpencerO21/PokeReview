@@ -39,3 +39,10 @@ View, Favorite, and comment on any of the original Pokemon.
   - Database data placeholder showing content stored in the database: Comments are on the pokedetail which will be stored in the database
   - WebSocket data placeholder showing where realtime communication will go: There is a comment section where users can post and see other comments
 
+## CSS Deliverables
+- Header, footer and main content body: I used a mix of bootstrap and custom css to style these `main.css`. The other pages have their own css files `pokelist.css` and `pokeDetail.css`
+- Navigation elements: used mostly bootstrap for this, but changed some color using custom css
+- Responsive to window resizing: Bootstrap and flex made this fairly easy, the list page was a little more flex heavy.
+- Application elements: Used a lot of bootstrap and flex here as well to align things
+- Application text content: I used custom css to change so colors and font sizes
+- Application images: I always struggle sizing images, but was able to get a default image for each card and resized it using custom css.
