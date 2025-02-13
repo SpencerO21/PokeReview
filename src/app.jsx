@@ -14,7 +14,7 @@ export default function App() {
                     <div className="col-12">
                         <h1 className="text-center">PokeReview</h1>
                         <h2 className="text-center"><a href="https://github.com/SpencerO21/PokeReview"
-                                                       className="text-decoration-none">My startup repo</a></h2>
+                                                       className="text-decoration-none">Spencer Olson's startup repo</a></h2>
                         <nav className="mt-3">
                             <ul className="nav justify-content-center">
                                 <li className="nav-item"><NavLink className="nav-link" to="">Login</NavLink></li>

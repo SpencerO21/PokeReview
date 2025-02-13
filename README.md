@@ -46,3 +46,8 @@ View, Favorite, and comment on any of the original Pokemon.
 - Application elements: Used a lot of bootstrap and flex here as well to align things
 - Application text content: I used custom css to change so colors and font sizes
 - Application images: I always struggle sizing images, but was able to get a default image for each card and resized it using custom css.
+
+## React pt 1
+- I bundled using Vite
+- I converted all my pages to React
+- I use React router now
