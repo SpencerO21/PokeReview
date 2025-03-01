@@ -9,7 +9,7 @@ export function PokeDetail() {
                 <div className="row justify-content-center">
                     <div className="col-md-8 col-lg-6">
                         <article className="card">
-                            <img src="../../public/Poké_Ball_icon.svg.png" className="card-img-top" alt="a pokemon"/>
+                            <img src="/Poké_Ball_icon.svg.png" className="card-img-top" alt="a pokemon"/>
                             <div className="card-content">
                                 <h2>Bulbasaur</h2>
                                 <p>Grass pokemon</p>

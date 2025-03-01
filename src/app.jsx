@@ -5,8 +5,13 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { PokeList} from "./pokelist/pokeList";
 import { PokeDetail } from "./pokedetail/pokeDetail";
+import {AuthState} from "./login/authState";
 
 export default function App() {
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
     return (
         <BrowserRouter>
             <div className="body container-fluid">
@@ -26,7 +31,20 @@ export default function App() {
                     </div>
                 </header>
                 <Routes>
-                    <Route path='/' element={<Login />} exact />
+                    <Route
+                        path='/'
+                        element={
+                            <Login
+                                userName={userName}
+                                authState={authState}
+                                onAuthChange={(userName, authState) => {
+                                    setAuthState(authState);
+                                    setUserName(userName);
+                                }}
+                            />
+                        }
+                        exact
+                    />
                     <Route path='/pokedetail' element={<PokeDetail />} />
                     <Route path='/pokelist' element={<PokeList />} />
                     <Route path='*' element={<NotFound />} />
