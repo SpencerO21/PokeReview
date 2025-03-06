@@ -2,12 +2,15 @@ import React, {useEffect, useState} from "react";
 import './pokeDetail.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useParams} from "react-router-dom";
-import {fetchPokemonById} from "./pokeDetailData";
+import {commentApi, fetchPokemonById} from "./pokeDetailData";
 
 export function PokeDetail() {
     const { id } = useParams();
     const [pokemon, setPokemon] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
+    const [isLoadingComments, setIsLoadingComments] = useState(false);
 
     useEffect(() => {
         const loadPokemon = async () => {
@@ -24,6 +27,36 @@ export function PokeDetail() {
 
         loadPokemon();
     }, [id]);
+
+    useEffect(() => {
+        const loadComments = async () => {
+            setIsLoadingComments(true);
+            try {
+                const comments = await commentApi.getComments(id);
+                setComments(comments);
+            } finally {
+                setIsLoadingComments(false);
+            }
+        };
+        loadComments();
+    }, [id]);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!newComment.trim()) return;
+
+        // Post new comment
+        await commentApi.postComment({
+            pokemonId: id,
+            author: "User", // Hardcoded for mock
+            text: newComment
+        });
+
+        // Refresh comments
+        const updatedComments = await commentApi.getComments(id);
+        setComments(updatedComments);
+        setNewComment('');
+    }
 
     if (isLoading) {
         return (
@@ -56,19 +89,38 @@ export function PokeDetail() {
                         </article>
                     </div>
                 </div>
-                    <form method="post" action="pokeDetail.html" className="mb-4">
-                        <div className="form-group">
-                        <textarea className="form-control comment-textbox" rows="5"
-                                  placeholder="Enter your comment:"></textarea>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Post</button>
-                    </form>
-                    <h2 className="mb-3">Comments</h2>
-                    <article className="comment-card">
-                        <h3 className="username">@Person</h3>
-                        <p className="comment">This is a cool pokemon</p>
-                    </article>
-                </div>
+                <form onSubmit={handleSubmit} className="mb-4">
+                    <div className="form-group">
+                    <textarea
+                        className="form-control comment-textbox"
+                        rows="5"
+                        placeholder="Enter your comment:"
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                    />
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        {isLoadingComments ? 'Posting...' : 'Post Comment'}
+                    </button>
+                </form>
+
+                <h2 className="mb-3">Comments</h2>
+                {isLoadingComments ? (
+                    <p>Loading comments...</p>
+                ) : (
+                    comments.map(comment => (
+                        <article key={comment.id} className="comment-card mb-3">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h3 className="username">@{comment.author}</h3>
+                                <small className="text-muted">
+                                    {new Date(comment.timestamp).toLocaleDateString()}
+                                </small>
+                            </div>
+                            <p className="comment-text mt-2">{comment.text}</p>
+                        </article>
+                    ))
+                )}
+            </div>
         </main>
-);
+    );
 }
