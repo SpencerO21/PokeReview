@@ -26,8 +26,7 @@ export default function App() {
                                 {authState === AuthState.Authenticated && (
                                 <li className="nav-item"><NavLink className="nav-link"
                                                                   to="pokelist">Pokemon</NavLink></li> )}
-                                {authState === AuthState.Authenticated && (
-                                <li className="nav-item"><NavLink className="nav-link" to="pokedetail">PokeDetail</NavLink></li> )}
+
                             </ul>
                         </nav>
                     </div>
