@@ -51,3 +51,7 @@ View, Favorite, and comment on any of the original Pokemon.
 - I bundled using Vite
 - I converted all my pages to React
 - I use React router now
+
+## React pt 2
+- I mocked all app functionality
+- I used useState and useEffect
