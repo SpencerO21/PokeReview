@@ -23,9 +23,11 @@ export default function App() {
                         <nav className="mt-3">
                             <ul className="nav justify-content-center">
                                 <li className="nav-item"><NavLink className="nav-link" to="">Login</NavLink></li>
+                                {authState === AuthState.Authenticated && (
                                 <li className="nav-item"><NavLink className="nav-link"
-                                                                  to="pokelist">Pokemon</NavLink></li>
-                                <li className="nav-item"><NavLink className="nav-link" to="pokedetail">PokeDetail</NavLink></li>
+                                                                  to="pokelist">Pokemon</NavLink></li> )}
+                                {authState === AuthState.Authenticated && (
+                                <li className="nav-item"><NavLink className="nav-link" to="pokedetail">PokeDetail</NavLink></li> )}
                             </ul>
                         </nav>
                     </div>
