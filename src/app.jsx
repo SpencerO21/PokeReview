@@ -47,7 +47,7 @@ export default function App() {
                         }
                         exact
                     />
-                    <Route path='/pokedetail' element={<PokeDetail />} />
+                    <Route path='/pokedetail/:id' element={<PokeDetail />} />
                     <Route path='/pokelist' element={<PokeList />} />
                     <Route path='*' element={<NotFound />} />
                 </Routes>

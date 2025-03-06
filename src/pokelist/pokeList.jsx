@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from "react-bootstrap/Button";
 import {fetchPokemonPage} from "./pokeListData";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Link } from 'react-router-dom';
 
 
 export function PokeList(props) {
@@ -47,11 +48,13 @@ export function PokeList(props) {
                 <div className="card-container">
                     {pokemonData.map((pokemon) => (
                         <article key={pokemon.id} className="card mt-3">
-                            <img src="/Poké_Ball_icon.svg.png" alt={pokemon.name} />
-                            <div className="card-content">
-                                <h2>{pokemon.name}</h2>
-                                <p>{pokemon.type} Pokémon</p>
-                            </div>
+                            <Link to={`/pokedetail/${pokemon.id}`} state={{ pokemon }} className="text-decoration-none text-dark">
+                                <img src="/Poké_Ball_icon.svg.png" alt={pokemon.name} />
+                                <div className="card-content">
+                                    <h2>{pokemon.name}</h2>
+                                    <p>{pokemon.type} Pokémon</p>
+                                </div>
+                            </Link>
                         </article>
                     ))}
                 </div>
