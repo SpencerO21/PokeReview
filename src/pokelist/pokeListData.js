@@ -1,26 +1,29 @@
-// Mock data generator
-const generateMockPokemon = (page, perPage = 10) => {
-    const types = ['Fire', 'Water', 'Grass', 'Electric', 'Psychic'];
-    const names = ['Charizard', 'Blastoise', 'Venusaur', 'Pikachu', 'Mewtwo'];
+export const fetchPokemonPage = async (page) => {
+    const limit = 20; // Items per page
+    const offset = (page - 1) * limit;
 
-    return Array(perPage)
-        .fill(null)
-        .map((_, i) => ({
-            id: (page - 1) * perPage + i + 1,
-            name: `${names[i % names.length]} #${(page - 1) * perPage + i + 1}`,
-            type: types[Math.floor(Math.random() * types.length)]
-        }));
-};
+    const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+    );
 
-// Mock API call simulation
-export const fetchPokemonPage = (page) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve({
-                results: generateMockPokemon(page),
-                hasMore: page < 5 // Only 5 pages of data
-            });
-        }, 1000); // Simulate network delay
-    });
+    const { results, count, next } = await response.json();
+
+    // Fetch detailed data for each Pokémon
+    const detailedResults = await Promise.all(
+        results.map(async (pokemon) => {
+            const res = await fetch(pokemon.url);
+            return res.json();
+        })
+    );
+
+    return {
+        results: detailedResults.map(pokemon => ({
+            id: pokemon.id,
+            name: pokemon.name,
+            types: pokemon.types.map(t => t.type.name),
+            sprite: pokemon.sprites.front_default
+        })),
+        hasMore: !!next // Determine if more pages exist
+    };
 };
 

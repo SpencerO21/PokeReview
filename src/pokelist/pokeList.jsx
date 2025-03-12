@@ -49,18 +49,28 @@ export function PokeList(props) {
                 loader={<h4 className="text-center mt-3">Loading more Pokémon...</h4>}
                 endMessage={
                     <p className="text-center mt-3">
-                        <b>You've caught all 50 Pokémon! 🎉</b>
+                        <b>You've caught them all! 🎉</b>
                     </p>
                 }
             >
                 <div className="card-container">
                     {pokemonData.map((pokemon) => (
                         <article key={pokemon.id} className="card mt-3">
-                            <Link to={`/pokedetail/${pokemon.id}`} state={{ pokemon }} className="text-decoration-none text-dark">
-                                <img src="/Poké_Ball_icon.svg.png" alt={pokemon.name} />
+                            <Link
+                                to={`/pokedetail/${pokemon.id}`}
+                                state={{ pokemon }}
+                                className="text-decoration-none text-dark"
+                            >
+                                <img
+                                    src={pokemon.sprite || "/Poké_Ball_icon.svg.png"}
+                                    alt={pokemon.name}
+                                    onError={(e) => {
+                                        e.target.src = "/Poké_Ball_icon.svg.png";
+                                    }}
+                                />
                                 <div className="card-content">
                                     <h2>{pokemon.name}</h2>
-                                    <p>{pokemon.type} Pokémon</p>
+                                    <p>{pokemon.types.join(', ')} Pokémon</p>
                                 </div>
                             </Link>
                         </article>
