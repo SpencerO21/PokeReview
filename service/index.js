@@ -8,6 +8,7 @@ const authCookieName = 'token';
 
 
 let users = [];
+let comments = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 app.use(express.json());
