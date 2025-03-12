@@ -55,3 +55,11 @@ View, Favorite, and comment on any of the original Pokemon.
 ## React pt 2
 - I mocked all app functionality
 - I used useState and useEffect
+
+## Service
+- Service created using Node.js and Express
+- Frontend served up using Express static middleware
+- Front end calls third party endpoints (PokeAPI).
+- Backend provides service endpoints (all the login stuff and getting/posting comments)
+- Front end calls service endpoints
+- Supports registration, login, logout, and restricted endpoint
