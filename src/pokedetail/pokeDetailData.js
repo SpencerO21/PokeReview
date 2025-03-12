@@ -1,21 +1,26 @@
-export const fetchPokemonById = (id) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            const types = ['Fire', 'Water', 'Grass', 'Electric', 'Psychic'];
-            const names = ['Charizard', 'Blastoise', 'Venusaur', 'Pikachu', 'Mewtwo'];
+export const fetchPokemonById = async (id) => {
+    try {
+        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        if (!pokemonResponse.ok) throw new Error('Pokémon not found');
 
-            const pokemon = {
-                id,
-                name: `${names[(id - 1) % names.length]} #${id}`,
-                type: types[(id - 1) % types.length],
-                description: `A majestic ${types[(id - 1) % types.length]} type Pokémon`,
-                height: (id * 10) % 100,
-                weight: (id * 5) % 200
-            };
+        const pokemonData = await pokemonResponse.json();
 
-            resolve(pokemon);
-        }, 1000);
-    });
+        return {
+            id: pokemonData.id,
+            name: pokemonData.name,
+            types: pokemonData.types.map(t => t.type.name),
+            height: pokemonData.height / 10, // Convert to meters
+            weight: pokemonData.weight / 10, // Convert to kilograms
+            sprite: pokemonData.sprites.front_default || '/Poké_Ball_icon.svg.png',
+            stats: pokemonData.stats.map(stat => ({
+                name: stat.stat.name,
+                value: stat.base_stat
+            }))
+        };
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error;
+    }
 };
 
 let mockComments = [
@@ -30,20 +35,38 @@ let mockComments = [
 
 export const commentApi = {
     async getComments(pokemonId) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        return mockComments.filter(c => c.pokemonId === pokemonId);
+        try {
+            const response = await fetch('/api/comments');
+            if (!response.ok) throw new Error('Failed to fetch comments');
+            const allComments = await response.json();
+            return allComments.filter(c => c.pokemonId === pokemonId);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            return [];
+        }
     },
 
     async postComment(commentData) {
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+            const response = await fetch('/api/comment/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    comment: {
+                        ...commentData,
+                        id: Date.now(),
+                        timestamp: new Date().toISOString()
+                    }
+                })
+            });
 
-        const newComment = {
-            ...commentData,
-            id: Date.now(),
-            timestamp: new Date().toISOString()
-        };
-
-        mockComments.push(newComment);
-        return newComment;
+            if (!response.ok) throw new Error('Failed to post comment');
+            return await response.json();
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            throw error;
+        }
     }
 };

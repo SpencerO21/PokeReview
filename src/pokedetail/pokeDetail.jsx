@@ -70,25 +70,51 @@ export function PokeDetail() {
     }
     return (
         <main className="container">
-            <div className="row">
-                <div className="row justify-content-center">
-                    <div className="col-md-8 col-lg-6">
-                        <article className="card">
-                            <img src="/Poké_Ball_icon.svg.png"
-                                 className="card-img-top"
-                                 alt={pokemon.name}/>
-                            <div className="card-content">
-                                <h2>{pokemon.name}</h2>
-                                <p className="text-capitalize">{pokemon.type} Pokémon</p>
-                                <div className="stats mt-3">
-                                    <p>Height: {pokemon.height} cm</p>
-                                    <p>Weight: {pokemon.weight} kg</p>
+            <div className="row justify-content-center py-4">
+                <div className="col-12 col-md-10 col-lg-8 col-xl-6">
+                    <article className="card shadow-lg border-0 mb-4">
+                        <img
+                            src={pokemon.sprite || "/Poké_Ball_icon.svg.png"}
+                            className="card-img-top p-4 bg-light"
+                            alt={pokemon.name}
+                            style={{height: '300px', objectFit: 'contain'}}
+                            onError={(e) => {
+                                e.target.src = "/Poké_Ball_icon.svg.png";
+                            }}
+                        />
+
+                        <div className="card-body">
+                            <h1 className="card-title display-5 text-center mb-2">
+                                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                            </h1>
+                            <div className="d-flex justify-content-center mb-4">
+                                <div className="badge bg-primary fs-5">
+                                    {pokemon.types.join(' / ').toUpperCase()}
                                 </div>
-                                <p className="fst-italic mt-2">{pokemon.description}</p>
                             </div>
-                        </article>
-                    </div>
+                            <div className="mt-4">
+                                <h3 className="h5 mb-3">Base Stats</h3>
+                                <div className="list-group">
+                                    {pokemon.stats.map(stat => (
+                                        <div
+                                            key={stat.name}
+                                            className="list-group-item d-flex justify-content-between align-items-center bg-light"
+                                        >
+                                            <span className="text-capitalize">
+                                                {stat.name.replace('-', ' ')}
+                                            </span>
+                                            <span className="badge bg-primary rounded-pill">
+                                                {stat.value}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                        </div>
+                    </article>
                 </div>
+
                 <form onSubmit={handleSubmit} className="mb-4">
                     <div className="form-group">
                     <textarea
@@ -122,5 +148,6 @@ export function PokeDetail() {
                 )}
             </div>
         </main>
-    );
+    )
+        ;
 }

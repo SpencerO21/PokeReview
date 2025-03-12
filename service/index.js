@@ -31,6 +31,24 @@ apiRouter.post('/auth/create', async (req, res) => {
     }
 });
 
+apiRouter.post('/comment/create', async (req, res) => {
+    try {
+        const newComment = req.body.comment;
+        comments.push(newComment);
+        res.status(201).json(newComment);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create comment' });
+    }
+});
+
+apiRouter.get('/comments', async (req, res) => {
+    try {
+        res.status(200).json(comments);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch comments' });
+    }
+});
+
 apiRouter.post('/auth/login', async (req, res) => {
     const user = await findUser('email', req.body.email);
     if (user) {
