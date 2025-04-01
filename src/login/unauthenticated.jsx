@@ -9,7 +9,7 @@ export function Unauthenticated(props) {
     const [displayError, setDisplayError] = React.useState(null);
 
     async function loginUser() {
-        loginOrCreate(`/api/auth/create`);
+        loginOrCreate(`/api/auth/login`);
     }
 
     async function createUser() {

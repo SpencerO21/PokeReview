@@ -3,12 +3,10 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const app = express();
-
+const DB = require('./database.js');
 const authCookieName = 'token';
 
 
-let users = [];
-let comments = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 app.use(express.json());
@@ -33,8 +31,11 @@ apiRouter.post('/auth/create', async (req, res) => {
 
 apiRouter.post('/comment/create', async (req, res) => {
     try {
-        const newComment = req.body.comment;
-        comments.push(newComment);
+        const newComment = {
+            comment: req.body.comment,
+            pokemonId: req.body.pokemonId
+        }
+        await DB.addComment(newComment);
         res.status(201).json(newComment);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create comment' });
@@ -43,7 +44,8 @@ apiRouter.post('/comment/create', async (req, res) => {
 
 apiRouter.get('/comments', async (req, res) => {
     try {
-        res.status(200).json(comments);
+        const comments = await DB.getComments(req.body.pokemonId)
+        res.send(comments);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch comments' });
     }
@@ -54,6 +56,7 @@ apiRouter.post('/auth/login', async (req, res) => {
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
             user.token = uuid.v4();
+            await DB.updateUser(user);
             setAuthCookie(res, user.token);
             res.send({ email: user.email });
             return;
@@ -96,7 +99,7 @@ async function createUser(email, password) {
         password: passwordHash,
         token: uuid.v4(),
     };
-    users.push(user);
+    await DB.addUser(user);
 
     return user;
 }
@@ -104,7 +107,10 @@ async function createUser(email, password) {
 async function findUser(field, value) {
     if (!value) return null;
 
-    return users.find((u) => u[field] === value);
+    if (field === 'token') {
+        return DB.getUserByToken(value);
+    }
+    return DB.getUser(value);
 }
 
 function setAuthCookie(res, authToken) {

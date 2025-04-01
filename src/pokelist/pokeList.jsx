@@ -58,7 +58,8 @@ export function PokeList(props) {
                         <article key={pokemon.id} className="card mt-3">
                             <Link
                                 to={`/pokedetail/${pokemon.id}`}
-                                state={{ pokemon }}
+                                state={{ pokemon,
+                                username: props.username}}
                                 className="text-decoration-none text-dark"
                             >
                                 <img

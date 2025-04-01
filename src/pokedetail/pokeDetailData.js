@@ -36,10 +36,19 @@ let mockComments = [
 export const commentApi = {
     async getComments(pokemonId) {
         try {
-            const response = await fetch('/api/comments');
-            if (!response.ok) throw new Error('Failed to fetch comments');
-            const allComments = await response.json();
-            return allComments.filter(c => c.pokemonId === pokemonId);
+            const response = await fetch('/api/comment/create', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...commentData,
+                    timestamp: new Date().toISOString()
+
+                })
+            });
+
+            return response
         } catch (error) {
             console.error('Error fetching comments:', error);
             return [];
@@ -54,11 +63,9 @@ export const commentApi = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    comment: {
-                        ...commentData,
-                        id: Date.now(),
-                        timestamp: new Date().toISOString()
-                    }
+                    ...commentData,
+                    timestamp: new Date().toISOString()
+
                 })
             });
 

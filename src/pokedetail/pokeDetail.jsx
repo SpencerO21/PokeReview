@@ -11,6 +11,7 @@ export function PokeDetail() {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [isLoadingComments, setIsLoadingComments] = useState(false);
+    const username = location.state || '';
 
     useEffect(() => {
         const loadPokemon = async () => {
@@ -48,7 +49,7 @@ export function PokeDetail() {
         // Post new comment
         await commentApi.postComment({
             pokemonId: id,
-            author: "User", // Hardcoded for mock
+            author: username,
             text: newComment
         });
 
